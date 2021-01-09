@@ -12,9 +12,20 @@ function App() {
       </Helmet>
 
       <SearchBar />
+      <br />
       <div className="row">
-        <SearchResults />
-        <Nominations />
+
+        <div className="col-xl-5 col-l-12 border border-info rounded-top rounded-bottom display-box">
+          <p className="bg-dark" style={{position: "sticky", top: "0", width: "100%", zIndex: "1"}}> Search Results </p>
+          <SearchResults />
+        </div>
+        <div className="col-2"></div>
+          
+        <div className="col-xl-5 col-l-12 border border-info rounded-top rounded-bottom display-box">
+        <p className="bg-dark" style={{position: "sticky", top: "0", width: "100%", zIndex: "1"}}> Nominations </p>
+          <Nominations />
+        </div>
+
       </div>
       
       <footer>

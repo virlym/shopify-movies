@@ -13,6 +13,17 @@
   }
 }
 
+.container {
+  overflow-y: hidden;
+}
+
+.display-box {
+  /* padding: 5px; */
+  margin-bottom: 25px;
+  max-height: 75vh;
+  overflow-y: auto; 
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -41,6 +52,7 @@ footer{
   font-family: 'Bilbo', 'Times New Roman', Times, serif;
   text-align: center;
   color: black;
+  z-index: 1;
 }
 
 @keyframes App-logo-spin {
