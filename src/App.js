@@ -15,13 +15,13 @@ function App() {
       <br />
       <div className="row">
 
-        <div className="col-xl-5 col-l-12 border border-info rounded-top rounded-bottom display-box">
+        <div className="col-xl-5 col-lg-12 border border-info rounded-top rounded-bottom display-box" style={{textAlign: "center"}}>
           <p className="bg-dark" style={{position: "sticky", top: "0", width: "100%", zIndex: "1"}}> Search Results </p>
           <SearchResults />
         </div>
         <div className="col-2"></div>
           
-        <div className="col-xl-5 col-l-12 border border-info rounded-top rounded-bottom display-box">
+        <div className="col-xl-5 col-lg-12 border border-info rounded-top rounded-bottom display-box" style={{textAlign: "center"}}>
         <p className="bg-dark" style={{position: "sticky", top: "0", width: "100%", zIndex: "1"}}> Nominations </p>
           <Nominations />
         </div>

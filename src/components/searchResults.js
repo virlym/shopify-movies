@@ -7,8 +7,8 @@ function SearchResults(props) {
                 <div className="col-4">
                     <img src="https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg" alt="inceptionPoster" style={{width: "130px"}}/>
                 </div>
-                <div className="col-1"></div>
-                <div className="col-7">
+                {/* <div className="col-1"></div> */}
+                <div className="col-8">
                     <div className="row" style={{paddingTop: "20px"}}>
                         <div className="col-12">
                             <p> Inception (2010)</p>
