@@ -22,7 +22,7 @@ function Nominations(props) {
                     </div>
                 </div>
             </div>
-            <hr />
+            <hr className="slate-hr"/>
         </div>
     );
 }
