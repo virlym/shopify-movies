@@ -1,24 +1,21 @@
 import React from "react";
 
-function SearchBar() {
+function SearchBar(props) {
     return (
 
         <div className="row">
             <div className="col-12">
-                <div className="input-group input-group-lg" style={{ marginTop: "20px", textAlign: "center" }}>
-                    <div className="input-group-prepend">
-                        <span className="input-group-text" id="inputGroup-sizing-lg">Search</span>
-                    </div>
+                <form onSubmit={props.searchMovies} className="input-group input-group-lg" style={{ marginTop: "20px", textAlign: "center" }}>
+                    <input type="submit" className="input-group-prepend input-group-text" value="Search" />
                     <input
                         className="form-control"
-                        id="movieSearch"
-                        // value={this.state.searchTerm}
+                        value={props.searchState.searchTerm || ""}
                         name="searchTerm"
-                        // onChange={this.handleInputChange.bind(this)}
+                        onChange={props.handleSearchInputChange}
                         type="text"
                         placeholder="Movie Title"
                     />
-                </div>
+                </form>
             </div>
         </div>
     );

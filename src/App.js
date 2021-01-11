@@ -6,6 +6,7 @@ import SearchResults from "./components/searchResults.js";
 import Nominations from "./components/nominations.js";
 import NoSearchResults from "./components/noSearchResults.js";
 import NoNominations from "./components/noNominations.js";
+import API from "./utils/API";
 
 function App() {
   const [searchState, setSearchState] = useState({
@@ -30,21 +31,21 @@ function App() {
 
     console.log("grabbing stored data");
 
-    movieList = [{id: "1", title: "Inception", year: "2010", poster: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg", nominated: false}, {id: "2", title: "Inception", year: "2011", poster: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg", nominated: false}, {id: "3", title: "The Italian Job", year: "2003", poster: "https://m.media-amazon.com/images/M/MV5BNDYyNzYxNjYtNmYzMC00MTE0LWIwMmYtNTAyZDBjYTIxMTRhXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SX300.jpg", nominated: false}, {id: "4", title: "Inception", year: "2013", poster: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg", nominated: false}, {id: "5", title: "The Italian Job", year: "2004", poster: "https://m.media-amazon.com/images/M/MV5BNDYyNzYxNjYtNmYzMC00MTE0LWIwMmYtNTAyZDBjYTIxMTRhXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SX300.jpg", nominated: false}, {id: "6", title: "The Italian Job", year: "2005", poster: "https://m.media-amazon.com/images/M/MV5BNDYyNzYxNjYtNmYzMC00MTE0LWIwMmYtNTAyZDBjYTIxMTRhXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SX300.jpg", nominated: false}];
+    // movieList = [{id: "1", title: "Inception", year: "2010", poster: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg", nominated: false}, {id: "2", title: "Inception", year: "2011", poster: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg", nominated: false}, {id: "3", title: "The Italian Job", year: "2003", poster: "https://m.media-amazon.com/images/M/MV5BNDYyNzYxNjYtNmYzMC00MTE0LWIwMmYtNTAyZDBjYTIxMTRhXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SX300.jpg", nominated: false}, {id: "4", title: "Inception", year: "2013", poster: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg", nominated: false}, {id: "5", title: "The Italian Job", year: "2004", poster: "https://m.media-amazon.com/images/M/MV5BNDYyNzYxNjYtNmYzMC00MTE0LWIwMmYtNTAyZDBjYTIxMTRhXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SX300.jpg", nominated: false}, {id: "6", title: "The Italian Job", year: "2005", poster: "https://m.media-amazon.com/images/M/MV5BNDYyNzYxNjYtNmYzMC00MTE0LWIwMmYtNTAyZDBjYTIxMTRhXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SX300.jpg", nominated: false}];
     
 
-    nominationList = [{id: "3", title: "The Italian Job", year: "2003", poster: "https://m.media-amazon.com/images/M/MV5BNDYyNzYxNjYtNmYzMC00MTE0LWIwMmYtNTAyZDBjYTIxMTRhXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SX300.jpg"}, {id: "4", title: "Inception", year: "2013", poster: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg", nominated: false}];
+    // nominationList = [{id: "3", title: "The Italian Job", year: "2003", poster: "https://m.media-amazon.com/images/M/MV5BNDYyNzYxNjYtNmYzMC00MTE0LWIwMmYtNTAyZDBjYTIxMTRhXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SX300.jpg"}, {id: "4", title: "Inception", year: "2013", poster: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg", nominated: false}];
 
-    for(let i = 0; i < movieList.length; i++){
-      for (let j = 0; j < nominationList.length; j++){
-        if(movieList[i].id === nominationList[j].id){
-          movieList[i].nominated = true;
-        }
-      }
-    }
+    // for(let i = 0; i < movieList.length; i++){
+    //   for (let j = 0; j < nominationList.length; j++){
+    //     if(movieList[i].id === nominationList[j].id){
+    //       movieList[i].nominated = true;
+    //     }
+    //   }
+    // }
 
-    setNominationState({nominations: nominationList});
-    setSearchState({searchResults: movieList});
+    // setNominationState({nominations: nominationList});
+    // setSearchState({searchResults: movieList});
   }
 
   function removeNomination (idRemoved){
@@ -94,13 +95,48 @@ function App() {
     }
   }
 
+  function searchMovies(event){
+    event.preventDefault();
+    API.search(searchState.searchTerm)
+        .then(function (res){
+          if(res.data.Response === "True"){
+            console.log(res.data);
+            let movieList = [];
+            for(let i = 0; i < res.data.Search.length; i++){
+              if(res.data.Search[i].Type === "movie"){
+                let isNominated = false;
+                for(let j = 0; j < nominationState.nominations.length; j++){
+                  if(nominationState.nominations[j].id === res.data.Search[i].imdbID){
+                    isNominated = true;
+                  }
+                }
+                let imgLink = res.data.Search[i].Poster;
+                if(imgLink === "N/A"){
+                  imgLink = "https://123moviesfree.zone/no-poster.png"
+                }
+                movieList.push({id: res.data.Search[i].imdbID, title: res.data.Search[i].Title, year: res.data.Search[i].Year, poster: imgLink, nominated: isNominated});
+              }
+            }
+            setSearchState({...searchState, searchResults: movieList});
+          }
+        })
+        .catch(err => console.log("error :", err));
+  }
+
+  function handleSearchInputChange(event){
+    const value = event.target.value;
+    const name = event.target.name;
+    setSearchState({...searchState, [name]: value});
+  }
+
   return (
     <div className = "container">
       <Helmet>
         <body className="bg-dark text-light"/>
       </Helmet>
 
-      <SearchBar />
+      <h2 style={{textAlign: "center"}}>The Shoppies</h2>
+      <SearchBar searchMovies={searchMovies} handleSearchInputChange={handleSearchInputChange} searchState={searchState}/>
       <br />
       <div className="row">
 
@@ -115,7 +151,7 @@ function App() {
         <div className="col-2"></div>
           
         <div className="col-xl-5 col-lg-12 border border-info rounded-top rounded-bottom display-box" style={{textAlign: "center"}}>
-        <h3 className="bg-dark" style={{position: "sticky", top: "0", width: "100%", zIndex: "1"}}> Nominations </h3>
+        <h3 className="bg-dark" style={{position: "sticky", top: "0", width: "100%", zIndex: "1"}}> Nominations <span style={{fontSize: "15px"}}>({nominationState.nominations.length}/5)</span></h3>
         {nominationState.nominations.length > 0
             ? nominationState.nominations.map(function(nominationArray){
               return <Nominations nominations={nominationArray} key={nominationArray.id} removeNomination={removeNomination} />})
