@@ -7,6 +7,7 @@ import Nominations from "./components/nominations.js";
 import NoSearchResults from "./components/noSearchResults.js";
 import NoNominations from "./components/noNominations.js";
 import API from "./utils/API";
+import DoneNominating from "./components/doneNominating.js";
 
 function App() {
   const [searchState, setSearchState] = useState({
@@ -19,6 +20,8 @@ function App() {
     nominations: []
     // {id, title, year, poster}
   });
+
+  const [completeState, setCompleteState] = useState(false);
 
   useEffect(function() {
     fetchStored();
@@ -85,6 +88,7 @@ function App() {
           setNominationState({nominations: updateNominations});
           if(nominationState.nominations.length === 5){
             console.log("thank you");
+            setCompleteState(true);
           }
         }
       }
@@ -135,6 +139,11 @@ function App() {
         <body className="bg-dark text-light"/>
       </Helmet>
 
+      {completeState === true
+        ? <DoneNominating completeState={completeState} setCompleteState={setCompleteState} />
+        : null
+      }
+      
       <h2 style={{textAlign: "center"}}>The Shoppies</h2>
       <SearchBar searchMovies={searchMovies} handleSearchInputChange={handleSearchInputChange} searchState={searchState}/>
       <br />
