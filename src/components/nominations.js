@@ -1,7 +1,6 @@
 import React from "react";
 
 function Nominations(props) {
-    console.log(props);
     return (
         <div>
             <div className="row">
@@ -17,7 +16,7 @@ function Nominations(props) {
                     <br />
                     <div className="row">
                         <div className="col-12">
-                            <button> Remove </button>
+                            <button onClick={function(){props.removeNomination(props.nominations.id)}}> Remove </button>
                         </div>
                     </div>
                 </div>

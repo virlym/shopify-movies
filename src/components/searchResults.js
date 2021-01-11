@@ -1,7 +1,6 @@
 import React from "react";
 
 function SearchResults(props) {
-    console.log(props);
     return (
         <div>
             <div className="row">
@@ -18,7 +17,7 @@ function SearchResults(props) {
                     <div className="row">
                         <div className="col-12">
                             {props.searchResults.nominated === false
-                                ? <button> Nominate </button>
+                                ? <button onClick={function(){props.addNomination(props.searchResults.id)}}> Nominate </button>
                                 : <button disabled> Nominated </button>
                             }
                         </div>

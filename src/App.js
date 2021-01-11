@@ -30,10 +30,10 @@ function App() {
 
     console.log("grabbing stored data");
 
-    movieList = [{id: "1", title: "Inception", year: "2010", poster: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg", nominated: false}, {id: "2", title: "Inception", year: "2011", poster: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg", nominated: false}, {id: "3", title: "The Italian Job", year: "2003", poster: "https://m.media-amazon.com/images/M/MV5BNDYyNzYxNjYtNmYzMC00MTE0LWIwMmYtNTAyZDBjYTIxMTRhXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SX300.jpg", nominated: false}, {id: "4", title: "Inception", year: "2013", poster: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg", nominated: false}];
+    movieList = [{id: "1", title: "Inception", year: "2010", poster: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg", nominated: false}, {id: "2", title: "Inception", year: "2011", poster: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg", nominated: false}, {id: "3", title: "The Italian Job", year: "2003", poster: "https://m.media-amazon.com/images/M/MV5BNDYyNzYxNjYtNmYzMC00MTE0LWIwMmYtNTAyZDBjYTIxMTRhXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SX300.jpg", nominated: false}, {id: "4", title: "Inception", year: "2013", poster: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg", nominated: false}, {id: "5", title: "The Italian Job", year: "2004", poster: "https://m.media-amazon.com/images/M/MV5BNDYyNzYxNjYtNmYzMC00MTE0LWIwMmYtNTAyZDBjYTIxMTRhXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SX300.jpg", nominated: false}, {id: "6", title: "The Italian Job", year: "2005", poster: "https://m.media-amazon.com/images/M/MV5BNDYyNzYxNjYtNmYzMC00MTE0LWIwMmYtNTAyZDBjYTIxMTRhXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SX300.jpg", nominated: false}];
     
 
-    nominationList = [{id: "3", title: "The Italian Job", year: "2003", poster: "https://m.media-amazon.com/images/M/MV5BNDYyNzYxNjYtNmYzMC00MTE0LWIwMmYtNTAyZDBjYTIxMTRhXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SX300.jpg"}];
+    nominationList = [{id: "3", title: "The Italian Job", year: "2003", poster: "https://m.media-amazon.com/images/M/MV5BNDYyNzYxNjYtNmYzMC00MTE0LWIwMmYtNTAyZDBjYTIxMTRhXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SX300.jpg"}, {id: "4", title: "Inception", year: "2013", poster: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg", nominated: false}];
 
     for(let i = 0; i < movieList.length; i++){
       for (let j = 0; j < nominationList.length; j++){
@@ -42,9 +42,56 @@ function App() {
         }
       }
     }
-    
+
     setNominationState({nominations: nominationList});
     setSearchState({searchResults: movieList});
+  }
+
+  function removeNomination (idRemoved){
+    console.log("hi");
+    console.log(idRemoved);
+    let index;
+    for(var i = 0; i < nominationState.nominations.length; i += 1) {
+      if(nominationState.nominations[i].id === idRemoved) {
+          index = i;
+      }
+    }
+    if(index >= 0){
+      for(let i = 0; i < searchState.searchResults.length; i++){
+        if(searchState.searchResults[i].id === idRemoved){
+          let newSearchState = searchState.searchResults;
+          newSearchState[i].nominated = false;
+          setSearchState({...searchState, searchResults: newSearchState})
+        }
+      }
+      console.log(index);
+      let newNominations = nominationState.nominations;
+      newNominations.splice(index, 1);
+      setNominationState({nominations: newNominations});
+    }
+  }
+
+  function addNomination (idNominated){
+    if(nominationState.nominations.length < 5){
+      for(let i = 0; i < searchState.searchResults.length; i++){
+        if(searchState.searchResults[i].id === idNominated){
+          let newSearchState = searchState.searchResults;
+          newSearchState[i].nominated = true;
+          let newNomination = {id: newSearchState[i].id, title: newSearchState[i].title, year: newSearchState[i].year, poster: newSearchState[i].poster};
+          let updateNominations = nominationState.nominations;
+          updateNominations.push(newNomination); 
+          setSearchState({...searchState, searchResults: newSearchState});
+          setNominationState({nominations: updateNominations});
+          if(nominationState.nominations.length === 5){
+            console.log("thank you");
+          }
+        }
+      }
+
+    }
+    else{
+      console.log("nomination limit reached");
+    }
   }
 
   return (
@@ -61,7 +108,7 @@ function App() {
           <h3 className="bg-dark" style={{position: "sticky", top: "0", width: "100%", zIndex: "1"}}> Search Results </h3>
           {searchState.searchResults.length > 0
             ? searchState.searchResults.map(function(searchArray){
-              return <SearchResults searchResults={searchArray} key={searchArray.id} />})
+              return <SearchResults searchResults={searchArray} key={searchArray.id} addNomination={addNomination} />})
             : <NoSearchResults />
           }
         </div>
@@ -71,7 +118,7 @@ function App() {
         <h3 className="bg-dark" style={{position: "sticky", top: "0", width: "100%", zIndex: "1"}}> Nominations </h3>
         {nominationState.nominations.length > 0
             ? nominationState.nominations.map(function(nominationArray){
-              return <Nominations nominations={nominationArray} key={nominationArray.id} />})
+              return <Nominations nominations={nominationArray} key={nominationArray.id} removeNomination={removeNomination} />})
             : <NoNominations />
           }
         </div>
