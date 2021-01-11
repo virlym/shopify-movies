@@ -8,6 +8,7 @@ import NoSearchResults from "./components/noSearchResults.js";
 import NoNominations from "./components/noNominations.js";
 import API from "./utils/API";
 import DoneNominating from "./components/doneNominating.js";
+import NominationCap from "./components/nominationCap.js";
 
 function App() {
   const [searchState, setSearchState] = useState({
@@ -22,6 +23,7 @@ function App() {
   });
 
   const [completeState, setCompleteState] = useState(false);
+  const [errorState, setErrorState] = useState(false);
 
   useEffect(function() {
     fetchStored();
@@ -96,6 +98,7 @@ function App() {
     }
     else{
       console.log("nomination limit reached");
+      setErrorState(true);
     }
   }
 
@@ -143,7 +146,10 @@ function App() {
         ? <DoneNominating completeState={completeState} setCompleteState={setCompleteState} />
         : null
       }
-      
+      {errorState === true
+        ? <NominationCap errorState={errorState} setErrorState={setErrorState} />
+        : null
+      }
       <h2 style={{textAlign: "center"}}>The Shoppies</h2>
       <SearchBar searchMovies={searchMovies} handleSearchInputChange={handleSearchInputChange} searchState={searchState}/>
       <br />
