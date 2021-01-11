@@ -1,7 +1,6 @@
 import React from "react";
 
-function NoNominations(props) {
-    //console.log(props);
+function NoNominations() {
     return (
         <div className="row">
             <div className="col-12">

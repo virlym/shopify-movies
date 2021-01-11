@@ -1,5 +1,6 @@
 import { Button, Modal } from 'react-bootstrap';
 import React from "react";
+import "./nominationCap.css"
 
 function NominationCap(props) {
     function handleClose(){
@@ -7,8 +8,8 @@ function NominationCap(props) {
     }
 
     return (
-        <Modal show={props.errorState} onHide={handleClose} style={{textAlign: "center"}} centered>
-          <Modal.Body className="bg-danger" style={{fontSize: "25px"}}>
+        <Modal show={props.errorState} onHide={handleClose} className="center-text" centered>
+          <Modal.Body className="bg-danger error-message">
               You already have five nominations!
               <br />
               <br />

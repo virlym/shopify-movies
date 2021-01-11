@@ -17,11 +17,27 @@
   overflow-y: hidden;
 }
 
+h2 {
+  text-align: center;
+}
+
+span {
+  font-size: 15px;
+}
+
+.section-head {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
 .display-box {
   /* padding: 5px; */
   margin-bottom: 25px;
   max-height: 70vh;
   overflow-y: auto; 
+  text-align: center;
 }
 
 .App-header {

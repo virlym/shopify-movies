@@ -1,28 +1,32 @@
 import './App.css';
 import React, { useState, useEffect } from "react";
 import {Helmet} from 'react-helmet';
-import SearchBar from "./components/searchBar.js";
-import SearchResults from "./components/searchResults.js";
-import Nominations from "./components/nominations.js";
+import SearchBar from "./components/searchBar/searchBar.js";
+import SearchResults from "./components/searchResults/searchResults.js";
+import Nominations from "./components/nominations/nominations.js";
 import NoSearchResults from "./components/noSearchResults.js";
 import NoNominations from "./components/noNominations.js";
 import API from "./utils/API";
-import DoneNominating from "./components/doneNominating.js";
-import NominationCap from "./components/nominationCap.js";
+import DoneNominating from "./components/doneNominating/doneNominating.js";
+import NominationCap from "./components/nominationCap/nominationCap.js";
 
 function App() {
+  // search field and results
   const [searchState, setSearchState] = useState({
     searchTerm: "",
     searchResults: []
     // {id, title, year, poster, nominated (T/F)}
   });
 
+  // user nominations
   const [nominationState, setNominationState] = useState({
     nominations: []
     // {id, title, year, poster}
   });
 
+  // nomination complete message
   const [completeState, setCompleteState] = useState(false);
+  // nomination limit reached message
   const [errorState, setErrorState] = useState(false);
 
   useEffect(function() {
@@ -30,6 +34,7 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // get stored nominations if present
   function fetchStored (){
     let savedList = getSavedNominations();
     if(savedList){
@@ -37,6 +42,7 @@ function App() {
     }
   }
 
+  // remove nomination from user list and update saved nominations
   function removeNomination (idRemoved){
     let index;
     for(var i = 0; i < nominationState.nominations.length; i += 1) {
@@ -60,6 +66,9 @@ function App() {
     }
   }
 
+  // add nomination to user list and update saved nominations
+  // show completion banner if it was the 5th nomination
+  // show error banner if they try to add more than 5
   function addNomination (idNominated){
     if(nominationState.nominations.length < 5){
       for(let i = 0; i < searchState.searchResults.length; i++){
@@ -73,7 +82,6 @@ function App() {
           setNominationState({nominations: updateNominations});
           saveNominations();
           if(nominationState.nominations.length === 5){
-            console.log("thank you");
             setCompleteState(true);
           }
         }
@@ -81,11 +89,11 @@ function App() {
 
     }
     else{
-      console.log("nomination limit reached");
       setErrorState(true);
     }
   }
 
+  // search API for movies with the specified word(s) in the title then update search results
   function searchMovies(event){
     event.preventDefault();
     API.search(searchState.searchTerm)
@@ -114,12 +122,14 @@ function App() {
         .catch(err => console.log("error :", err));
   }
 
+  // track search field input
   function handleSearchInputChange(event){
     const value = event.target.value;
     const name = event.target.name;
     setSearchState({...searchState, [name]: value});
   }
 
+  // save user nominations to local storage
   function saveNominations(){
     localStorage.clear();
     // if there's no nominations, don't bother saving
@@ -130,6 +140,7 @@ function App() {
     localStorage.setItem("Shoppies", storage);
   }
 
+  // retrieve saved nominations if any
   function getSavedNominations(){
     if(JSON.parse(localStorage.getItem("Shoppies"))){
         if((JSON.parse(localStorage.getItem("Shoppies")).length !== 0)){
@@ -153,13 +164,13 @@ function App() {
         ? <NominationCap errorState={errorState} setErrorState={setErrorState} />
         : null
       }
-      <h2 style={{textAlign: "center"}}>The Shoppies</h2>
+      <h2>The Shoppies</h2>
       <SearchBar searchMovies={searchMovies} handleSearchInputChange={handleSearchInputChange} searchState={searchState}/>
       <br />
       <div className="row">
 
-        <div className="col-xl-5 col-lg-12 border border-info rounded-top rounded-bottom display-box" style={{textAlign: "center"}}>
-          <h3 className="bg-dark" style={{position: "sticky", top: "0", width: "100%", zIndex: "1"}}> Search Results </h3>
+        <div className="col-xl-5 col-lg-12 border border-info rounded-top rounded-bottom display-box">
+          <h3 className="bg-dark section-head"> Search Results </h3>
           {searchState.searchResults.length > 0
             ? searchState.searchResults.map(function(searchArray){
               return <SearchResults searchResults={searchArray} key={searchArray.id} addNomination={addNomination} />})
@@ -168,8 +179,8 @@ function App() {
         </div>
         <div className="col-2"></div>
           
-        <div className="col-xl-5 col-lg-12 border border-info rounded-top rounded-bottom display-box" style={{textAlign: "center"}}>
-        <h3 className="bg-dark" style={{position: "sticky", top: "0", width: "100%", zIndex: "1"}}> Nominations <span style={{fontSize: "15px"}}>({nominationState.nominations.length}/5)</span></h3>
+        <div className="col-xl-5 col-lg-12 border border-info rounded-top rounded-bottom display-box">
+        <h3 className="bg-dark section-head"> Nominations <span>({nominationState.nominations.length}/5)</span></h3>
         {nominationState.nominations.length > 0
             ? nominationState.nominations.map(function(nominationArray){
               return <Nominations nominations={nominationArray} key={nominationArray.id} removeNomination={removeNomination} />})

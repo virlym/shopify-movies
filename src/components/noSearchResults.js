@@ -1,6 +1,6 @@
 import React from "react";
 
-function NoSearchResults(props) {
+function NoSearchResults() {
     return (
         <div className="row">
             <div className="col-12">

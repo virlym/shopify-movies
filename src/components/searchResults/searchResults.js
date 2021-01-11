@@ -1,14 +1,15 @@
 import React from "react";
+import "./searchResults.css";
 
 function SearchResults(props) {
     return (
         <div>
             <div className="row">
                 <div className="col-4">
-                    <img src={props.searchResults.poster} alt={props.searchResults.title + "Poster"} style={{ width: "130px" }} />
+                    <img src={props.searchResults.poster} alt={props.searchResults.title + "Poster"} className="poster-size"/>
                 </div>
                 <div className="col-8">
-                    <div className="row" style={{ paddingTop: "20px" }}>
+                    <div className="row description-row">
                         <div className="col-12">
                             <p> {props.searchResults.title} ({props.searchResults.year})</p>
                         </div>
@@ -24,7 +25,7 @@ function SearchResults(props) {
                     </div>
                 </div>
             </div>
-            <hr style={{ border: "1px solid slategrey" }} />
+            <hr />
         </div>
 
     );
