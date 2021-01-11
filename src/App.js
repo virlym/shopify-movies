@@ -191,7 +191,7 @@ function App() {
       </div>
       
       <footer>
-        <small> &copy; 2020 Virlym di Aunel</small>
+        <small> &copy; 2021 Virlym di Aunel</small>
       </footer>
     </div>
   );
