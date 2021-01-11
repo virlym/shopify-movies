@@ -31,31 +31,13 @@ function App() {
   }, []);
 
   function fetchStored (){
-    let movieList = [];
-    let nominationList = [];
-
-    console.log("grabbing stored data");
-
-    // movieList = [{id: "1", title: "Inception", year: "2010", poster: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg", nominated: false}, {id: "2", title: "Inception", year: "2011", poster: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg", nominated: false}, {id: "3", title: "The Italian Job", year: "2003", poster: "https://m.media-amazon.com/images/M/MV5BNDYyNzYxNjYtNmYzMC00MTE0LWIwMmYtNTAyZDBjYTIxMTRhXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SX300.jpg", nominated: false}, {id: "4", title: "Inception", year: "2013", poster: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg", nominated: false}, {id: "5", title: "The Italian Job", year: "2004", poster: "https://m.media-amazon.com/images/M/MV5BNDYyNzYxNjYtNmYzMC00MTE0LWIwMmYtNTAyZDBjYTIxMTRhXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SX300.jpg", nominated: false}, {id: "6", title: "The Italian Job", year: "2005", poster: "https://m.media-amazon.com/images/M/MV5BNDYyNzYxNjYtNmYzMC00MTE0LWIwMmYtNTAyZDBjYTIxMTRhXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SX300.jpg", nominated: false}];
-    
-
-    // nominationList = [{id: "3", title: "The Italian Job", year: "2003", poster: "https://m.media-amazon.com/images/M/MV5BNDYyNzYxNjYtNmYzMC00MTE0LWIwMmYtNTAyZDBjYTIxMTRhXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SX300.jpg"}, {id: "4", title: "Inception", year: "2013", poster: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg", nominated: false}];
-
-    // for(let i = 0; i < movieList.length; i++){
-    //   for (let j = 0; j < nominationList.length; j++){
-    //     if(movieList[i].id === nominationList[j].id){
-    //       movieList[i].nominated = true;
-    //     }
-    //   }
-    // }
-
-    // setNominationState({nominations: nominationList});
-    // setSearchState({searchResults: movieList});
+    let savedList = getSavedNominations();
+    if(savedList){
+      setNominationState({nominations: savedList});
+    }
   }
 
   function removeNomination (idRemoved){
-    console.log("hi");
-    console.log(idRemoved);
     let index;
     for(var i = 0; i < nominationState.nominations.length; i += 1) {
       if(nominationState.nominations[i].id === idRemoved) {
@@ -74,6 +56,7 @@ function App() {
       let newNominations = nominationState.nominations;
       newNominations.splice(index, 1);
       setNominationState({nominations: newNominations});
+      saveNominations();
     }
   }
 
@@ -88,6 +71,7 @@ function App() {
           updateNominations.push(newNomination); 
           setSearchState({...searchState, searchResults: newSearchState});
           setNominationState({nominations: updateNominations});
+          saveNominations();
           if(nominationState.nominations.length === 5){
             console.log("thank you");
             setCompleteState(true);
@@ -134,6 +118,25 @@ function App() {
     const value = event.target.value;
     const name = event.target.name;
     setSearchState({...searchState, [name]: value});
+  }
+
+  function saveNominations(){
+    localStorage.clear();
+    // if there's no nominations, don't bother saving
+    if(nominationState.nominations.length === 0){
+        return;
+    }
+    var storage = JSON.stringify(nominationState.nominations);
+    localStorage.setItem("Shoppies", storage);
+  }
+
+  function getSavedNominations(){
+    if(JSON.parse(localStorage.getItem("Shoppies"))){
+        if((JSON.parse(localStorage.getItem("Shoppies")).length !== 0)){
+            return(JSON.parse(localStorage.getItem("Shoppies")));
+        }
+    }
+    return "";
   }
 
   return (
