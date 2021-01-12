@@ -170,7 +170,7 @@ function App() {
       <div className="row">
 
         <div className="col-xl-5 col-lg-12 border border-info rounded-top rounded-bottom display-box">
-          <h3 className="bg-dark section-head"> Search Results </h3>
+          <h3 className="section-head"> Search Results </h3>
           {searchState.searchResults.length > 0
             ? searchState.searchResults.map(function(searchArray){
               return <SearchResults searchResults={searchArray} key={searchArray.id} addNomination={addNomination} />})
@@ -180,7 +180,7 @@ function App() {
         <div className="col-2"></div>
           
         <div className="col-xl-5 col-lg-12 border border-info rounded-top rounded-bottom display-box">
-        <h3 className="bg-dark section-head"> Nominations <span>({nominationState.nominations.length}/5)</span></h3>
+        <h3 className="section-head"> Nominations <span>({nominationState.nominations.length}/5)</span></h3>
         {nominationState.nominations.length > 0
             ? nominationState.nominations.map(function(nominationArray){
               return <Nominations nominations={nominationArray} key={nominationArray.id} removeNomination={removeNomination} />})
